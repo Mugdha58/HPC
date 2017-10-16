@@ -56,7 +56,7 @@ for(n=64;n<2049;n=n*2)
 
         }
     end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\nCPU time for n=%d is %f",n,cpu_time);
     gflops=((double)(double)2*pow(n,3))/(double)(cpu_time*pow(10,9));
     printf("\nthe gflops used by dgemm1 n=%d are %.16f",n,gflops);
