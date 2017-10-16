@@ -50,7 +50,7 @@ int main()
     cpu_time=end-start;
     printf("\n CPU time for ijk is  %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
+    printf("\nthe gflops used are=%.16f",gflops);
     //implementing jik loop
      start= clock();
     for (j = 0; j < n; j+=block_size)
@@ -68,7 +68,7 @@ int main()
     cpu_time=end-start;
     printf("\nCPU time for jik loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
+    printf("\nthe gflops used are=%.16f",gflops);
     for(i=0;i<n*n;i++)
     {
        difference=(abs)(c1[i]-c2[i]);
@@ -96,7 +96,7 @@ int main()
     cpu_time=end-start;
     printf("\nCPU time for kij loop for block size is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
+    printf("\nthe gflops used are=%.16f",gflops);
     //implementing ikj
     start= clock();
     for (i = 0; i < n; i+=block_size)
@@ -113,7 +113,7 @@ int main()
     cpu_time=end-start;
     printf("\nCPU time for ikj loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
+    printf("\nthe gflops used are=%.16f",gflops);
     for(i=0;i<n;i++)
     {
        difference=(abs)(c1[i]-c2[i]);
@@ -138,7 +138,7 @@ int main()
     cpu_time=end-start;
     printf("\nCPU time for jki loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
+    printf("\nthe gflops used are=%.16f",gflops);
 
     //implementing kji
     start= clock();
@@ -159,7 +159,7 @@ int main()
     cpu_time=end-start;
     printf("\nCPU time for kji loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
+    printf("\nthe gflops used are=%.16f",gflops);
     for(i=0;i<n;i++)
     {
        difference=(abs)(c1[i]-c2[i]);
