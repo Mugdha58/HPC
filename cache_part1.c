@@ -58,7 +58,7 @@ int main()
         }
     }
     end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\nCPU time for jik loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
@@ -79,7 +79,7 @@ int main()
         }
     }
     end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\nCPU time for kij loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
