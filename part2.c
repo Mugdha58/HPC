@@ -71,7 +71,7 @@ int main()
     end=clock();
     cpu_time=end-start;
     gflops=2*(double)(pow(n,3))/(cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
+    printf("\nthe gflops used are=%.16f",gflops);
     //dgemmo for comparison with dgemm2
     for(i=0;i<n;i++)
         for(j=0;j<n;j++)
