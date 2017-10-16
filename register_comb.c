@@ -43,7 +43,7 @@ for(n=64;n<2049;n=n*2)
                 end=clock();
     cpu_time=end-start;
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
-    printf("\nthe gflops used by dgemmo  for n=%d are=%f",n,gflops);
+    printf("\nthe gflops used by dgemmo  for n=%d are=%.16f",n,gflops);
     //implementation of dgemm1
     start= clock();
     for(i=0;i<n;i++)
@@ -59,7 +59,7 @@ for(n=64;n<2049;n=n*2)
     cpu_time=end-start;
     printf("\nCPU time for n=%d is %f",n,cpu_time);
     gflops=((double)(double)2*pow(n,3))/(double)(cpu_time*pow(10,9));
-    printf("\nthe gflops used by dgemm1 n=%d are %f",n,gflops);
+    printf("\nthe gflops used by dgemm1 n=%d are %.16f",n,gflops);
     for(i=0;i<n*n;i++)
     {
        difference=(abs)(c1[i]-c2[i]);
