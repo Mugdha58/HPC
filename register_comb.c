@@ -41,7 +41,7 @@ for(n=64;n<2049;n=n*2)
                 c1[i*n+j]+=a[i*n+k]*b[k*n+j];
 
                 end=clock();
-    cpu_time=end-start;
+    cpu_time=end-start/(CLOCKS_PER_SEC);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used by dgemmo  for n=%d are=%.16f",n,gflops);
     //implementation of dgemm1
@@ -56,7 +56,7 @@ for(n=64;n<2049;n=n*2)
 
         }
     end=clock();
-    cpu_time=end-start;
+    cpu_time=end-start/(CLOCKS_PER_SEC);
     printf("\nCPU time for n=%d is %f",n,cpu_time);
     gflops=((double)(double)2*pow(n,3))/(double)(cpu_time*pow(10,9));
     printf("\nthe gflops used by dgemm1 n=%d are %.16f",n,gflops);
