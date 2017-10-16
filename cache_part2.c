@@ -47,7 +47,7 @@ int main()
 	                       c1[i1*n+j1]=r;
                       }
 	 end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\n CPU time for ijk is  %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
@@ -65,7 +65,7 @@ int main()
                             c2[i1*n+j1]=r;
                   }
     end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\nCPU time for jik loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
@@ -93,7 +93,7 @@ int main()
 
                         }
     end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\nCPU time for kij loop for block size is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
@@ -110,7 +110,7 @@ int main()
 	                      c2[i1*n+j1] += r*b[k1*n + j1];
                         }
     end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\nCPU time for ikj loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
@@ -135,7 +135,7 @@ int main()
                       c1[i1*n+j1] +=r*a[i1*n + k1];
                 }
     end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\nCPU time for jki loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
@@ -156,7 +156,7 @@ int main()
                 }
 
     end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
+    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
     printf("\nCPU time for kji loop is %f",cpu_time);
     gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
