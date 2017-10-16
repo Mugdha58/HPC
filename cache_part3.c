@@ -16,7 +16,7 @@ int main()
     register int t,tt,ta,tta,tb,ttb;
     register double c00,c01,c10,c11,a00,a01,a10,a11,b00,b01,b10,b11;
     clock_t start,end;
-    start= clock();
+    
     a=(double *) calloc(sizeof(double), n*n);
     b=(double *) calloc(sizeof(double), n*n);
     c1=(double *) calloc(sizeof(double), n*n);
@@ -33,6 +33,7 @@ int main()
 
     for(block_size=2;block_size<20;block_size=block_size*2)
     {
+        start= clock();
         printf("BLOCK %d calculation:",block_size);
         for(i=0;i<n;i+=block_size)
             for(j=0;j<n;j+=block_size)
