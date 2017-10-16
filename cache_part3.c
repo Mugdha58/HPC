@@ -75,7 +75,7 @@ int main()
 
 
         end=clock();
-        cpu_time=end-start/(CLOCKS_PER_SEC);
+        cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
         printf("\ntime of execution is %f",cpu_time);
         gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
         printf("\n gflops used are %.16f",gflops);
