@@ -1,0 +1,10 @@
+BLOCK 4 calculation:
+time of execution is 83.130000
+ gflops used are 0.206663
+ the error value for n=2048 is 0.000000 BLOCK 8 calculation:
+time of execution is 53.800000
+ gflops used are 0.319328
+ the error value for n=2048 is 0.000000 BLOCK 16 calculation:
+time of execution is 45.050000
+ gflops used are 0.381351
+ the error value for n=2048 is 0.000000 

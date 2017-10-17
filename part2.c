@@ -13,9 +13,9 @@ int main()
     int i,j,k,n;
     double *a,*b,*c1,*c2,cpu_time,gflops,temp,difference,error;
     register int t,tt,ta,tta,tb,ttb;
+struct timespec cstart = {0,0}, cend ={0,0};
     register double c00,c01,c10,c11,a00,a01,a10,a11,b00,b01,b10,b11;
-    clock_t start,end;
-    start= clock();
+    clock_gettime(CLOCK_MONOTONIC, &cstart);
     for(n=64;n<=2048;n=n*2)
     {
     a=(double *) calloc(sizeof(double), n*n);
@@ -68,8 +68,9 @@ int main()
         }
     }
 
-    end=clock();
-    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
+    clock_gettime(CLOCK_MONOTONIC, &cend);
+    double cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
+
     gflops=2*(double)(pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used are=%.16f",gflops);
     //dgemmo for comparison with dgemm2

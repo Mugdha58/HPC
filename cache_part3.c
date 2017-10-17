@@ -16,7 +16,7 @@ int main()
     register int t,tt,ta,tta,tb,ttb;
     register double c00,c01,c10,c11,a00,a01,a10,a11,b00,b01,b10,b11;
     clock_t start,end;
-    
+
     a=(double *) calloc(sizeof(double), n*n);
     b=(double *) calloc(sizeof(double), n*n);
     c1=(double *) calloc(sizeof(double), n*n);
@@ -31,7 +31,7 @@ int main()
               c2[i*n+j]=temp;
     }
 
-    for(block_size=2;block_size<20;block_size=block_size*2)
+    for(block_size=4;block_size<20;block_size=block_size*2)
     {
         start= clock();
         printf("BLOCK %d calculation:",block_size);
@@ -77,8 +77,8 @@ int main()
         end=clock();
         cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
         printf("\ntime of execution is %f",cpu_time);
-        gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
-        printf("\n gflops used are %.16f",gflops);
+        gflops=(2*(double)pow(n,3))/(cpu_time*pow(10,9));
+        printf("\n gflops used are %f",gflops);
         //implementing dgemmo for comparison
         for(i=0;i<n;i++)
             for(j=0;j<n;j++)
@@ -86,7 +86,6 @@ int main()
                     c2[i*n+j]+=a[i*n+k]*b[k*n+j];
                     //comparison of dgemm2 with dgemmo
         error = 0.0;
-        printf("\n%f\n",error);
         for(i=0;i<n*n;i++)
         {
            difference=(abs)(c1[i]-c2[i]);
@@ -102,3 +101,4 @@ int main()
     free(c2);
     return 0;
 }
+

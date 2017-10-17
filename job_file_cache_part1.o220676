@@ -1,0 +1,15 @@
+CPU time for ijk loop is 325.000000
+the gflops used are=0.0528611359507692
+CPU time for jik loop is 307.170000
+the gflops used are=0.0559295152000521
+ the error value is 0.000000 
+CPU time for kij loop is 110.220000
+the gflops used are=0.1558688911631283
+CPU time for ikj loop is 842279258.000000
+the gflops used are=0.0000000203968803
+ the error value is 0.000000 
+CPU time for jki loop is 1300619158.000000
+the gflops used are=0.0000000132089929
+CPU time for kji loop is 1765888700.000000
+the gflops used are=0.0000000097287384
+ the error value is 0.000000 

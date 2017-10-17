@@ -1,0 +1,46 @@
+BLOCK 4 calculation:
+ CPU time for ijk is  164.537707
+the gflops used are=0.104413
+CPU time for jik loop is 187.851463
+the gflops used are=0.091455
+ the error value is 0.000000 
+CPU time for kij loop for block size is 111.573841
+the gflops used are=0.153978
+CPU time for ikj loop is 105.308838
+the gflops used are=0.163138
+ the error value is 0.000000 
+CPU time for jki loop is 217.657626
+the gflops used are=0.078931
+CPU time for kji loop is 211.433663
+the gflops used are=0.081254
+ the error value is 0.000000 BLOCK 8 calculation:
+ CPU time for ijk is  110.216453
+the gflops used are=0.155874
+CPU time for jik loop is 108.888194
+the gflops used are=0.157775
+ the error value is 0.000000 
+CPU time for kij loop for block size is 84.908562
+the gflops used are=0.202334
+CPU time for ikj loop is 90.686200
+the gflops used are=0.189443
+ the error value is 0.000000 
+CPU time for jki loop is 148.776806
+the gflops used are=0.115474
+CPU time for kji loop is 173.795329
+the gflops used are=0.098851
+ the error value is 0.000000 BLOCK 16 calculation:
+ CPU time for ijk is  115.537224
+the gflops used are=0.148696
+CPU time for jik loop is 117.741249
+the gflops used are=0.145912
+ the error value is 0.000000 
+CPU time for kij loop for block size is 105.961177
+the gflops used are=0.162134
+CPU time for ikj loop is 102.073296
+the gflops used are=0.168309
+ the error value is 0.000000 
+CPU time for jki loop is 153.489157
+the gflops used are=0.111929
+CPU time for kji loop is 170.697624
+the gflops used are=0.100645
+ the error value is 0.000000 

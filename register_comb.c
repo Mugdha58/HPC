@@ -11,8 +11,8 @@ double Random_gen ( )
 int main()
 {
     int i,j,k,n;
-    double *a,*b,*c1,*c2,cpu_time,gflops,error=0.00,difference;
-    clock_t start,end;
+    struct timespec cstart={0,0}, cend={0,0}; 
+   double *a,*b,*c1,*c2,cpu_time,gflops,error=0.00,difference,temp;
 
     //implementation of dgemmo
 for(n=64;n<2049;n=n*2)
@@ -25,7 +25,7 @@ for(n=64;n<2049;n=n*2)
     c2=(double *) calloc(sizeof(double), n*n);
     for(i=0;i<n;i++)
         for(j=0;j<n;j++)
-    {
+   {
               a[i*n+j]=(double)Random_gen();
               b[i*n+j]=(double)Random_gen();
               temp=(double)Random_gen();
@@ -34,18 +34,20 @@ for(n=64;n<2049;n=n*2)
 
 
     }
-    start= clock();
+     clock_gettime(CLOCK_MONOTONIC, &cstart);
     for(i=0;i<n;i++)
         for(j=0;j<n;j++)
             for(k=0;k<n;k++)
                 c1[i*n+j]+=a[i*n+k]*b[k*n+j];
 
-                end=clock();
-    cpu_time=end-start/(CLOCKS_PER_SEC);
-    gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
+      
+    clock_gettime(CLOCK_MONOTONIC, &cend);
+    double cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
+   printf("\n cpu time for n=%d is %f",cpu_time);   
+ gflops=(2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used by dgemmo  for n=%d are=%.16f",n,gflops);
     //implementation of dgemm1
-    start= clock();
+   // start= clock();
     for(i=0;i<n;i++)
         for(j=0;j<n;j++)
         {
@@ -55,10 +57,12 @@ for(n=64;n<2049;n=n*2)
                     c2[i*n+j]=r;
 
         }
-    end=clock();
-    cpu_time=(double)(end-start)/(CLOCKS_PER_SEC);
-    printf("\nCPU time for n=%d is %f",n,cpu_time);
-    gflops=((double)(double)2*pow(n,3))/(double)(cpu_time*pow(10,9));
+	clock_gettime(CLOCK_MONOTONIC, &cend);
+     cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
+      printf("cpu time=%f",cpu_time);
+
+    
+    gflops=((double)2*pow(n,3))/(cpu_time*pow(10,9));
     printf("\nthe gflops used by dgemm1 n=%d are %.16f",n,gflops);
     for(i=0;i<n*n;i++)
     {
