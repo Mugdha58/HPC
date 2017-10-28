@@ -9,6 +9,7 @@ double Random_gen ( )
     return((double)rand()/upper_bound);
 
 }
+// add transpose
 void mydgetrf(double *a,int *pvt,int n)
 {
     int maxind,temps;
@@ -99,7 +100,6 @@ int main()
     {
     a=(double *) calloc(sizeof(double), n*n);
     b=(double *) calloc(sizeof(double), n*1);
-    abk=(double *) calloc(sizeof(double), n*n);
     pvt=(int *) calloc(sizeof(int), 1*n);
     y=(double *) calloc(sizeof(double), n*n);
     x=(double *) calloc(sizeof(double), n*n);
@@ -109,6 +109,8 @@ int main()
               a[i*n+j]=(double)Random_gen();
               b[j]=(double)Random_gen();
     }
+    for(i=0;i<n;i++)
+        pvt[i]=i;
     clock_gettime(CLOCK_MONOTONIC, &cstart);
     mygetrf(a,pvt,n);
     clock_gettime(CLOCK_MONOTONIC, &cend);
@@ -116,26 +118,13 @@ int main()
     printf("\nCPU time for LU factorization n=%d is %f",cpu_time);
     gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
     printf("\nthe gflops used are=%f",gflops);
-    clock_gettime(CLOCK_MONOTONIC, &cstart);
     mydtrsm(n,a,b,pvt,x,y,0);
-    clock_gettime(CLOCK_MONOTONIC, &cend);
-    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
-    printf("\nCPU time for forward substitution n=%d is %f",cpu_time);
-    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
-    clock_gettime(CLOCK_MONOTONIC, &cstart);
     mydtrsm(n,a,b,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
-    clock_gettime(CLOCK_MONOTONIC, &cend);
-    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
-    printf("\nCPU time for backward substitution n=%d is %f",cpu_time);
-    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
     free(a);
     free(b);
     free(x);
     free(y);
     free(pvt);
-    free(abk);
     }
     return 0;
 }
