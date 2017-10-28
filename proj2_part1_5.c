@@ -67,7 +67,7 @@ void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
     y[0]=b[pvt[0]];
     for(i=1;i<n;i++)
     {
-      for(k=1;k<i-1;k++)
+      for(k=0;k<i;k++)
       {
         sum+=y[k]*a[i*n+k];
         y[i]=b[pvt[i]]-sum;
@@ -77,7 +77,7 @@ void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
     //backward substitution
     else
     {
-    x[n-1]=y[n-1]/a[n*n+n];
+    x[n-1]=y[n-1]/a[(n-1)*n+(n-1)];
     for(i=n-1;i>=0;i--)
         for(k=i+1;k<n;k++)
     {
