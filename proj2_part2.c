@@ -2,19 +2,30 @@
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
-int i,j,k,n,t;
+int i,j,k,n,t,l,p,q,m;
 double Random_gen ( )
 {
     double upper_bound=RAND_MAX/10.0;
     return((double)rand()/upper_bound);
 
 }
-// add transpose
-void mydgetrf(double *a,int *pvt,int n)
+double neg_inverse(double *a,int n)
 {
-    int maxind,temps;
+    for(i=0;i<n;i++)
+    for(j=0;j<n;j++){
+        if(i!=j)
+            a[i*n+j]*=(-1);
+    }
+}
+void mydgetrf(double *a,int *pvt,int n,int block)
+{
+    int maxind,temps,ib,end;
     double max,tempv;
-    for(i=0;i<n-1;i++)
+    double *ll;
+    for(ib=0;ib<n;ib+=block)
+    {
+     end=3+ib;
+    for(i=ib;i<end;i++)
     {
        maxind=i;
        max=abs(a[i*n+i]);
@@ -49,16 +60,53 @@ void mydgetrf(double *a,int *pvt,int n)
             }
         }
        }
+       ll = (double*)calloc(sizeof(double), block*block);
+            //double *lln = (double*)calloc(sizeof(double), b*b);
+            p=0;q=0;
+            for(l=ib;l<=end;l++){
+                for(m=ib;m<=end;m++){
+                    if(l<m){
+                        ll[p*block+q] = a[p*block+q];
+                    }
+                    else if(l==m){
+                        ll[p*block+q] = 1;
+                    }
+                    else{
+                        ll[p*block+q] = 0;
+                    }
+                    q++;
+                }
+                p++;
+                q=0;
+            }
+            //matInverse(ll,lln,b);
+            p=0;q=0;
+            for(j=ib;j<=end;j++){
+                //arrA[j*n+i] = arrA[j*n+i]/arrA[i*n+i];
+                for(k=end+1;k<n;k++){
+                    for(m=ib;m<end;m++){
+                        a[j*n+k] += ll[p*block+q] * a[m*n+k];
+                        q++;
+                    }
+                    q=0;
+                }
+                p++;
+                q=0;
+            }
+    }
       //factorizing
-      for(j=i+1;j<n;k++)
+      for(j=end;j<n;j++)
       {
-          a[j*n+i]=a[j*n+i]/a[i*n+i];
-          for(k=i+1;k<n;k++)
-            a[j*n+k]=a[j*n+k]-(a[j*n+i]*a[i*n+k]);
+          for(k=end+1;k<n;k++){
+            for(l=ib;i<=end;l++)
+            a[j*n+k]=a[j*n+k]-(a[j*n+l]*a[l*n+k]);
+          }
       }
+    }
+    //ll inverse
 
     }
-}
+
 void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
 {
     double sum=0.0,temp;
@@ -109,10 +157,8 @@ int main()
               a[i*n+j]=(double)Random_gen();
               b[j]=(double)Random_gen();
     }
-    for(i=0;i<n;i++)
-        pvt[i]=i;
     clock_gettime(CLOCK_MONOTONIC, &cstart);
-    mydgetrf(a,pvt,n);
+    mygetrf(a,pvt,n);
     clock_gettime(CLOCK_MONOTONIC, &cend);
     cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
     printf("\nCPU time for LU factorization n=%d is %f",cpu_time);
