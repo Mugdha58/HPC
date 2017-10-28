@@ -1,3 +1,4 @@
+#include<stdio.h>
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
@@ -41,7 +42,7 @@ if(abs(a[t*n+i])>max)
        if(max==0)
        {
 
-        printf("LU factorization failed:coefficient matrix is singular");
+        printf("LU factorization failed:coefficient matrix is singular\n");
         return;
        }
        else
@@ -135,7 +136,7 @@ int main()
     mydgetrf(a,pvt,n);
     clock_gettime(CLOCK_MONOTONIC, &cend);
     cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
-    printf("\nCPU time for LU factorization n=%d is %f",cpu_time);
+    printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
     gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
     printf("\nthe gflops used are=%f",gflops);
     mydtrsm(n,a,B,pvt,x,y,0);
@@ -165,9 +166,9 @@ int main()
 
         for(i = 0; i < n; i++)
         {
-            double tmp = B[IPIV[i]-1];
-            B[IPIV[i]-1] = B[i];
-            B[i] = tmp;
+            double tmp = B1[IPIV[i]-1];
+            B1[IPIV[i]-1] = B1[i];
+            B1[i] = tmp;
         }
     // forward  L(Ux) = B => y = Ux
         dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&n,&M,&b,a1, &n, B1, &n);
@@ -188,5 +189,3 @@ int main()
     //}
     return 0;
 }
-
-
