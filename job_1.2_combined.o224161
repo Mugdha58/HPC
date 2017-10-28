@@ -1,0 +1,30 @@
+
+Size = 1000
+
+CPU time for LU factorisation is 3.71667
+
+Performance in GFLOPS = 0.179372
+
+Size = 2000
+
+CPU time for LU factorisation is 33.94108
+
+Performance in GFLOPS = 0.157135
+
+Size = 3000
+
+CPU time for LU factorisation is 120.06661
+
+Performance in GFLOPS = 0.149917
+
+Size = 4000
+
+CPU time for LU factorisation is 288.65221
+
+Performance in GFLOPS = 0.147813
+
+Size = 5000
+
+CPU time for LU factorisation is 595.80519
+
+Performance in GFLOPS = 0.139867
