@@ -183,7 +183,7 @@ int main()
             error=difference;
         }
         printf("\n the error value for n=%d is %f ",n,error);
-        free(A);
+       /* free(A);
         free(B);
         free(A1);
         free(B1);
@@ -191,7 +191,7 @@ int main()
         free(x);
         free(y);
         free(IPIV);
-        free(tempv);
+        free(tempv);*/
     }
     return 0;
 }
