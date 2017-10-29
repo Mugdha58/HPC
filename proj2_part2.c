@@ -131,7 +131,7 @@ void mydtrsm_f(int n, double *a, double *B, int *pvt, double *x, double *y){
     for(i=1;i<n;i++){
         sum = 0.0;
         for(k=0;k<i;k++){
-            sum += y[k]*A[i*n+k];
+            sum += y[k]*a[i*n+k];
         }
         y[i] = B[pvt[i]]-sum;
     }
@@ -140,12 +140,12 @@ void mydtrsm_f(int n, double *a, double *B, int *pvt, double *x, double *y){
 void mydtrsm_b(int n, double *a, double *B, int *pvt, double *x, double *y){
     double sum;
     int i,k;
-    x[n-1] = y[n-1]/A[(n-1)*n+(n-1)];
+    x[n-1] = y[n-1]/a[(n-1)*n+(n-1)];
     for(i=n-2;i>=0;i--){
         sum=0.0;
         for(k=i+1;k<n;k++){
-            sum+= x[k]*A[i*n+k];
-        x[i] = (y[i]-sum)/A[i*n+i];
+            sum+= x[k]*a[i*n+k];
+        x[i] = (y[i]-sum)/a[i*n+i];
     }
 }
 
@@ -159,9 +159,9 @@ int main()
     double gflops,cpu_time;
     struct timespec cstart = {0,0}, cend ={0,0};
     int block[4]={50,100,200,500};
-     for(n=1000;n<6000;n=n+1000)
+     for(n=1000;n<6000;n=n+1000)//loop for n values
     {
-      for(k=0;k<4;k++)
+      for(k=0;k<4;k++)// loop for block_size
       {
     a=(double *) calloc(sizeof(double), n*n);
     B=(double *) calloc(sizeof(double), n*1);
@@ -232,14 +232,7 @@ int main()
         error=difference;
     }
         printf("\n the error value for n=%d is %f ",n,error);
-    /*free(a);
-    free(B);
-    free(x);
-    free(y);
-    free(pvt);
-    free(a1);
-    free(B1);
-    free(tempv);*/
+   
     }
     return 0;
 }
