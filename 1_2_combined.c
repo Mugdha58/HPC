@@ -123,78 +123,78 @@ int main()
     y=(double *) calloc(sizeof(double), n);
     x=(double *) calloc(sizeof(double), n);
     tempv=(double *) calloc(sizeof(double), n);
-    for(i=0;i<n;i++)
-        for(j=0;j<n;j++)
-    {
-              a[i*n+j]=(double)Random_gen();
-              a1[i*n+j]=a[i*n+j];
-    }
-    for(i=0;i<n;i++){
-    B[i]=(double)Random_gen();
-    B1[i]=B[i];
-    pvt[i]=i;
-    }
-    transpose(a,n);
-    clock_gettime(CLOCK_MONOTONIC, &cstart);
-    mydgetrf(a,pvt,n,tempv);
-    clock_gettime(CLOCK_MONOTONIC, &cend);
-    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
-    printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
-    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
-    mydtrsm(n,a,B,pvt,x,y,0);
-    mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
-     for(i=0;i<n;i++)
-    printf("\nthe result of my implementation is %f\t",x[i]);
-    char    TRANS = 'N';
-    int     NRHS = 1;
-    int *IPIV = (int *)calloc(sizeof(int),n);
-        int     INFO = n;
-        int     LDA = n;
-        int     LDB = n;
-    // LU factorization
-        clock_gettime(CLOCK_MONOTONIC, &cstart);
-        LAPACK_dgetrf(&n,&n,a1,&LDA,IPIV,&INFO);
-        clock_gettime(CLOCK_MONOTONIC, &cend);
-        cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
-        printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
-        gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
-        printf("\nthe gflops used are=%f",gflops);
-        char     SIDE = 'L';
-        char     UPLO = 'L';
-        char     DIAG = 'U';
-        int      M    = 1;
-        double   b    = 1.0;
-
-        for(i = 0; i < n; i++)
-        {
-            double tmp = B1[IPIV[i]-1];
-            B1[IPIV[i]-1] = B1[i];
-            B1[i] = tmp;
-        }
-    // forward  L(Ux) = B => y = Ux
-        dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&n,&M,&b,a1, &n, B1, &n);
-        UPLO = 'U';
-        DIAG = 'N';
-    // backward Ux = y
-        dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&n,&M,&b,a1, &n, B1, &n);
-        for(i=0;i<n;i++)
-            printf("\nthe result of library function is %f\t",B1[i]);
-     for(i=0;i<n*n;i++)
-        {
-       difference=(abs)(B1[i]-x[i]);
-       if(difference>error)
-        error=difference;
-        }
-        printf("\n the error value for n=%d is %f ",n,error);
-    free(a);
-    free(B);
-    free(x);
-    free(y);
-    free(pvt);
-    free(a1);
-    free(B1);
-    free(tempv);
+//    for(i=0;i<n;i++)
+//        for(j=0;j<n;j++)
+//    {
+//              a[i*n+j]=(double)Random_gen();
+//              a1[i*n+j]=a[i*n+j];
+//    }
+//    for(i=0;i<n;i++){
+//    B[i]=(double)Random_gen();
+//    B1[i]=B[i];
+//    pvt[i]=i;
+//    }
+//    transpose(a,n);
+//    clock_gettime(CLOCK_MONOTONIC, &cstart);
+//    mydgetrf(a,pvt,n,tempv);
+//    clock_gettime(CLOCK_MONOTONIC, &cend);
+//    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
+//    printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
+//    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
+//    printf("\nthe gflops used are=%f",gflops);
+//    mydtrsm(n,a,B,pvt,x,y,0);
+//    mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
+//     for(i=0;i<n;i++)
+//    printf("\nthe result of my implementation is %f\t",x[i]);
+//    char    TRANS = 'N';
+//    int     NRHS = 1;
+//    int *IPIV = (int *)calloc(sizeof(int),n);
+//        int     INFO = n;
+//        int     LDA = n;
+//        int     LDB = n;
+//    // LU factorization
+//        clock_gettime(CLOCK_MONOTONIC, &cstart);
+//        LAPACK_dgetrf(&n,&n,a1,&LDA,IPIV,&INFO);
+//        clock_gettime(CLOCK_MONOTONIC, &cend);
+//        cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
+//        printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
+//        gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
+//        printf("\nthe gflops used are=%f",gflops);
+//        char     SIDE = 'L';
+//        char     UPLO = 'L';
+//        char     DIAG = 'U';
+//        int      M    = 1;
+//        double   b    = 1.0;
+//
+//        for(i = 0; i < n; i++)
+//        {
+//            double tmp = B1[IPIV[i]-1];
+//            B1[IPIV[i]-1] = B1[i];
+//            B1[i] = tmp;
+//        }
+//    // forward  L(Ux) = B => y = Ux
+//        dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&n,&M,&b,a1, &n, B1, &n);
+//        UPLO = 'U';
+//        DIAG = 'N';
+//    // backward Ux = y
+//        dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&n,&M,&b,a1, &n, B1, &n);
+//        for(i=0;i<n;i++)
+//            printf("\nthe result of library function is %f\t",B1[i]);
+//     for(i=0;i<n*n;i++)
+//        {
+//       difference=(abs)(B1[i]-x[i]);
+//       if(difference>error)
+//        error=difference;
+//        }
+//        printf("\n the error value for n=%d is %f ",n,error);
+//    free(a);
+//    free(B);
+//    free(x);
+//    free(y);
+//    free(pvt);
+//    free(a1);
+//    free(B1);
+//    free(tempv);
   //  }
     return 0;
 }
