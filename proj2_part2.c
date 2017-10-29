@@ -4,7 +4,6 @@
 #include<math.h>
 #include "lapacke.h"
 #include "blas.h"
-int i,j,k,n,t,l,p,q,m;
 double Random_gen ( )
 {
     double upper_bound=RAND_MAX/10.0;
@@ -26,7 +25,7 @@ void transpose(double *a, int n){
 }
 void mydgetrf(double *a,int *pvt,int n,int block,double *tempv)
 {
-    int maxind,temps,ib,end;
+    int maxind,temps,ib,end,i,t,k,j,p,q,l,m;
     double max,sum;
     double *ll;
     for(ib=0;ib<n;ib+=block)
@@ -124,7 +123,7 @@ void mydgetrf(double *a,int *pvt,int n,int block,double *tempv)
 
     }
 
-void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
+void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
 {
     double sum=0.0,temp;
     if(label==0)// passing label to call forward and backward substitution separately
@@ -157,7 +156,9 @@ void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
 
 int main()
 {
-    int *pvt,n,k;
+    srand((double)time(NULL));
+    int *pvt,n,k,i,j,k,n;
+    double ran=randon_gen(10,1);
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
     struct timespec cstart = {0,0}, cend ={0,0};
@@ -235,14 +236,14 @@ int main()
         error=difference;
     }
         printf("\n the error value for n=%d is %f ",n,error);
-    free(a);
+    /*free(a);
     free(B);
     free(x);
     free(y);
     free(pvt);
     free(a1);
     free(B1);
-    free(tempv);
+    free(tempv);*/
     }
     return 0;
 }
