@@ -1,0 +1,67 @@
+Using LAPACK Library
+
+LAPACK LIBRARY
+Size N = 1000
+Time Taken = 0.48501 seconds
+
+Performance in GFLOPS = 1.374544
+
+MYDGETRF VERSION
+Time Taken = 3.89530 seconds
+
+Performance in GFLOPS = 0.171146
+
+
+ the error value for n=1000 is 0.000000 
+LAPACK LIBRARY
+Size N = 2000
+Time Taken = 4.00286 seconds
+
+Performance in GFLOPS = 1.332380
+
+MYDGETRF VERSION
+Time Taken = 32.98683 seconds
+
+Performance in GFLOPS = 0.161681
+
+
+ the error value for n=2000 is 0.000000 
+LAPACK LIBRARY
+Size N = 3000
+Time Taken = 13.41300 seconds
+
+Performance in GFLOPS = 1.341982
+
+MYDGETRF VERSION
+Time Taken = 112.21547 seconds
+
+Performance in GFLOPS = 0.160406
+
+
+ the error value for n=3000 is 0.000000 
+LAPACK LIBRARY
+Size N = 4000
+Time Taken = 31.86344 seconds
+
+Performance in GFLOPS = 1.339048
+
+MYDGETRF VERSION
+Time Taken = 271.02507 seconds
+
+Performance in GFLOPS = 0.157427
+
+
+ the error value for n=4000 is 0.000000 
+LAPACK LIBRARY
+Size N = 5000
+Time Taken = 66.83898 seconds
+
+Performance in GFLOPS = 1.246778
+
+MYDGETRF VERSION
+Time Taken = 520.65106 seconds
+
+Performance in GFLOPS = 0.160056
+
+
+ the error value for n=5000 is 0.000000 

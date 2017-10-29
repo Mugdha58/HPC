@@ -4,10 +4,7 @@
 #include<time.h>
 #include "lapacke.h"
 #include "blas.h"
-
-
-
-double Random_gen ( int upper, int lower)
+double Random_gen( int upper, int lower)
 {
     double s;
     s = ((double)rand()/(RAND_MAX))*(upper-lower);
@@ -55,8 +52,8 @@ void mydgetrf(double *A,int *pvt, double *tempv, int n){
 }
 
 void mydtrsm_f(int n, double *A, double *B, int *pvt, double *x, double *y){
-    double sum = 0.0, temp;
-    int i,j,k,t;
+    double sum;
+    int i,k;
     y[0] = B[pvt[0]];
     for(i=1;i<n;i++){
         sum = 0.0;
@@ -68,8 +65,8 @@ void mydtrsm_f(int n, double *A, double *B, int *pvt, double *x, double *y){
 }
 
 void mydtrsm_b(int n, double *A, double *B, int *pvt, double *x, double *y){
-    double sum = 0.0, temp;
-    int i,j,k,t;
+    double sum;
+    int i,k;
     x[n-1] = y[n-1]/A[(n-1)*n+(n-1)];
     for(i=n-2;i>=0;i--){
         sum=0.0;
@@ -93,12 +90,17 @@ void transpose(double *a, int n){
 }
 
 int main()
-{   srand((double)time(NULL));
+{   
+
+    srand((double)time(NULL));
     double time,gflops;
     int u=10,l=1;
     //int size = (sizeof(arrayLen)/sizeof(arrayLen[0]));
     double ran = Random_gen(u,l);
     int i,j,k,n,t,temp;
+double  *A, *A1, *B, *B1, *x, *y, *abk, *tempv, difference, error =0.0;
+        int *pvt, *IPIV;
+
     printf("Using LAPACK Library\n");
     for(n=1000;n<6000;n=n+1000)
     {
@@ -109,9 +111,7 @@ int main()
         int LDB = n;
         int N = n;
         int NRHS = 1;
-        int *IPIV = (int *)calloc(sizeof(int),n);
-        double  *A, *A1, *B, *B1, *x, *y, *abk, *tempv, difference, error =0.0;
-        int *pvt;
+        IPIV = (int *)calloc(sizeof(int),n);
         A=(double *) calloc(sizeof(double), n*n);
         B=(double *) calloc(sizeof(double), n);
         A1=(double *) calloc(sizeof(double), n*n);
@@ -143,7 +143,7 @@ int main()
         clock_gettime(CLOCK_MONOTONIC,&tstart);
         LAPACK_dgetrf(&N,&N,A,&LDA,IPIV,&INFO);
         clock_gettime(CLOCK_MONOTONIC,&tend);
-        double time = ((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) - ((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec);
+        time = ((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) - ((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec);
 
         for(i = 0; i < N; i++)
         {
@@ -161,7 +161,7 @@ int main()
         dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&N,&M,&a,A, &N, B, &N);
         printf("Size N = %d\n",n);
         printf("Time Taken = %.5f seconds\n",time);
-        double gflops = (2*pow(n,3))/(3*time*pow(10,9));
+        gflops = (2*pow(n,3))/(3*time*pow(10,9));
         printf("\nPerformance in GFLOPS = %f\n",gflops);
         printf("\n");
         clock_gettime(CLOCK_MONOTONIC,&tstart);
@@ -176,7 +176,7 @@ int main()
         printf("Time Taken = %.5f seconds\n",time);
         printf("\nPerformance in GFLOPS = %f\n",gflops);
         printf("\n");
-        for(i=0;i<n*n;i++)
+        for(i=0;i<n;i++)
         {
            difference = abs(B[i]-x[i]);
            if(difference>error)

@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
-int i,j,k,n,t,l,p,q,m;
+#include "lapacke.h"
+#include "blas.h"
+
 double Random_gen ( )
 {
     double upper_bound=RAND_MAX/10.0;
@@ -11,6 +13,7 @@ double Random_gen ( )
 }
 double neg_inverse(double *a,int n)
 {
+    int i,j;
     for(i=0;i<n;i++)
     for(j=0;j<n;j++){
         if(i!=j)
@@ -29,10 +32,10 @@ void transpose(double *a, int n){
         }
     }
 }
-void mydgetrf(double *a,int *pvt,int n,int block)
+void mydgetrf(double *a,int *pvt,int n,double *tempv,int block)
 {
-    int maxind,temps,ib,end;
-    double max,tempv;
+    int maxind,temps,ib,end,i,k,p,q,t,l,m,j;
+    double max;
     double *ll;
     for(ib=0;ib<n;ib+=block)
     {
@@ -66,9 +69,9 @@ void mydgetrf(double *a,int *pvt,int n,int block)
             pvt[i]=pvt[maxind];
             pvt[maxind]=temps;
             for(k=i;k<n;i++)
-            {tempv=a[i*n+k];
+            {tempv[k]=a[i*n+k];
             a[i*n+k]=a[maxind*n+k];
-            a[maxind*n+k]=tempv;
+            a[maxind*n+k]=tempv[k];
             }
         }
        }
@@ -119,6 +122,7 @@ void mydgetrf(double *a,int *pvt,int n,int block)
 
 void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
 {
+    int i,k;
     double sum=0.0,temp;
     if(label==0)// passing label to call forward and backward substitution separately
     {//forward substitution
@@ -150,10 +154,10 @@ void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
 
 int main()
 {
-    int *pvt,n=8;
+    int *pvt,n=8,i,j,k;
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
-    //struct timespec cstart = {0,0}, cend ={0,0};
+    struct timespec cstart = {0,0}, cend ={0,0};
    // for(n=1000;n<6000;n=n+1000)
     //{
     a=(double *) calloc(sizeof(double), n*n);
@@ -177,7 +181,7 @@ int main()
     }
     transpose(a,n);
     clock_gettime(CLOCK_MONOTONIC, &cstart);
-    mygetrf(a,pvt,n,tempv);
+    mydgetrf(a,pvt,n,tempv,4);
    clock_gettime(CLOCK_MONOTONIC, &cend);
    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
     printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
