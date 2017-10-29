@@ -7,11 +7,11 @@
 
 int i,j,k,n,t,temp;
 
-double Random_gen ( )
+double Random_gen ( int upper, int lower)
 {
-    double upper_bound=RAND_MAX/10.0,temp;
-    return((double)rand()/upper_bound);
-
+    double s;
+    s = ((double)rand()/(RAND_MAX))*(upper-lower);
+    return s;
 }
 
 void mydgetrf(double *A,int *pvt, double *tempv, int n){
@@ -94,7 +94,9 @@ void transpose(double *a, int n){
 int main()
 {   srand((double)time(NULL));
     double time,gflops;
+    int u=10,l=1;
     //int size = (sizeof(arrayLen)/sizeof(arrayLen[0]));
+    double ran = Random_gen(u,l);
     int n,j,i,k;
     printf("Using LAPACK Library\n");
     for(n=1000;n<6000;n=n+1000)
@@ -117,19 +119,19 @@ int main()
         y=(double *) calloc(sizeof(double), n);
         x=(double *) calloc(sizeof(double), n);
         tempv=(double *) calloc(sizeof(double), n);
-        int garbage=Random_gen();
-        for(i=0;i<n;i++)
-        for(j=0;j<n;j++)
-    {
-              A[i*n+j]=Random_gen();
+        for(i=0;i<n;i++){
+            for(j=0;j<n;j++)
+            {
+              A[i*n+j]=Random_gen(u,l);
               A1[i*n+j]=A[i*n+j];
-    }
+            }
+        }
     for(i=0;i<n;i++){
-        B[i]=Random_gen(10,1);
+        B[i]=Random_gen(u,l);
         B1[i]=B[i];
         pvt[i]=i;
     }
-    transpose(a,n);
+    transpose(A,n);
 
         char     SIDE = 'L';
         char     UPLO = 'L';
@@ -173,12 +175,12 @@ int main()
         printf("Time Taken = %.5f seconds\n",time);
         printf("\nPerformance in GFLOPS = %f\n",gflops);
         printf("\n");
-         for(i=0;i<n*n;i++)
-    {
-       difference=(abs)(B[i]-x[i]);
-       if(difference>error)
-        error=difference;
-    }
+        for(i=0;i<n*n;i++)
+        {
+           difference = abs(B[i]-x[i]);
+           if(difference>error)
+            error=difference;
+        }
         printf("\n the error value for n=%d is %f ",n,error);
         free(A);
         free(B);
@@ -187,7 +189,6 @@ int main()
         free(pvt);
         free(x);
         free(y);
-        free(abk);
         free(IPIV);
         free(tempv);
     }
