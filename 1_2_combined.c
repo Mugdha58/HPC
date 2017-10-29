@@ -45,21 +45,21 @@ void mydgetrf(double *a,int *pvt,int n,double *tempv)
         printf("LU factorization failed:coefficient matrix is singular");
         return;
        }
-//       else
-//       {
-//
-//        if(maxind!=i)
-//        {   //save pivoting information
-//            temps=pvt[i];
-//            pvt[i]=pvt[maxind];
-//            pvt[maxind]=temps;
-//            for(k=0;k<n;i++)
-//            {tempv[k]=a[i*n+k];
-//            a[i*n+k]=a[maxind*n+k];
-//            a[maxind*n+k]=tempv[k];
-//            }
-//        }
-//       }
+       else
+       {
+
+        if(maxind!=i)
+        {   //save pivoting information
+            temps=pvt[i];
+            pvt[i]=pvt[maxind];
+            pvt[maxind]=temps;
+            for(k=0;k<n;i++)
+            {tempv[k]=a[i*n+k];
+            a[i*n+k]=a[maxind*n+k];
+            a[maxind*n+k]=tempv[k];
+            }
+        }
+       }
 //      //factorizing
 //      for(j=i+1;j<n;k++)
 //      {
