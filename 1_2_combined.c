@@ -70,7 +70,7 @@ void mydgetrf(double *a,int *pvt,int n,double *tempv)
 
     }
 }
-void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
+void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
 {
     double sum=0.0,temp;
     if(label==0)// passing label to call forward and backward substitution separately
@@ -109,7 +109,7 @@ void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
 int main()
 {
     int *pvt,n=8;
-    double *a,*B,*a1,*B1,*x,*y,*tempv;
+    double *a,*B,*a1,*B1,*x,*y,*tempv,error=0.0,difference;
     double gflops,cpu_time;
     struct timespec cstart = {0,0}, cend ={0,0};
    // for(n=1000;n<6000;n=n+1000)
