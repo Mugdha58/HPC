@@ -4,12 +4,13 @@
 #include<math.h>
 #include "lapacke.h"
 #include "blas.h"
-double Random_gen ( )
+double Random_gen( int upper, int lower)
 {
-    double upper_bound=RAND_MAX/10.0;
-    return((double)rand()/upper_bound);
-
+    double s;
+    s = ((double)rand()/(RAND_MAX))*(upper-lower);
+    return s;
 }
+
 
 //to implement transpose as fortran has column wise implementation and the program is implemented in row wise implementation
 void transpose(double *a, int n){
@@ -125,16 +126,17 @@ void mydgetrf(double *a,int *pvt,int n,int block,double *tempv)
 
 void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
 {
+    int i,k;
     double sum=0.0,temp;
     if(label==0)// passing label to call forward and backward substitution separately
     {//forward substitution
-    y[0]=b[pvt[0]];
+    y[0]=B[pvt[0]];
     for(i=1;i<n;i++)
     {
       for(k=1;k<i-1;k++)
       {
         sum+=y[k]*a[i*n+k];
-        y[i]=b[pvt[i]]-sum;
+        y[i]=B[pvt[i]]-sum;
       }
     }
     }
@@ -158,7 +160,7 @@ int main()
 {
     srand((double)time(NULL));
     int *pvt,n,k,i,j,k,n;
-    double ran=randon_gen(10,1);
+    double ran=Randon_gen(10,1);
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
     struct timespec cstart = {0,0}, cend ={0,0};
@@ -178,11 +180,11 @@ int main()
     for(i=0;i<n;i++)
         for(j=0;j<n;j++)
     {
-              a[i*n+j]=(double)Random_gen();
+              a[i*n+j]=(double)Random_gen(10,1);
               a1[i*n+j]=a[i*n+j];
     }
     for(i=0;i<n;i++){
-    B[i]=(double)Random_gen();
+    B[i]=(double)Random_gen(10,1);
     B1[i]=B[i];
     pvt[i]=i;
     }
