@@ -7,10 +7,11 @@
 
 int i,j,k,n,t,temp;
 
-double random_gen(int ubound, int lbound){
-    double s;
-    s = ((double)rand()/(RAND_MAX))*(ubound-lbound);
-    return s;
+double Random_gen ( )
+{
+    double upper_bound=RAND_MAX/10.0,temp;
+    return((double)rand()/upper_bound);
+
 }
 
 void mydgetrf(double *A,int *pvt, double *tempv, int n){
@@ -116,19 +117,19 @@ int main()
         y=(double *) calloc(sizeof(double), n);
         x=(double *) calloc(sizeof(double), n);
         tempv=(double *) calloc(sizeof(double), n);
-        int garbage=random_gen(10,1);
+        int garbage=Random_gen();
         for(i=0;i<n;i++)
         for(j=0;j<n;j++)
     {
-              A[i*n+j]=random_gen(10,1);
+              A[i*n+j]=Random_gen();
               A1[i*n+j]=A[i*n+j];
     }
     for(i=0;i<n;i++){
-        B[i]=random_gen(10,1);
+        B[i]=Random_gen(10,1);
         B1[i]=B[i];
         pvt[i]=i;
     }
-    transpose(A,n);
+    transpose(a,n);
 
         char     SIDE = 'L';
         char     UPLO = 'L';
