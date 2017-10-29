@@ -11,15 +11,6 @@ double Random_gen ( )
     return((double)rand()/upper_bound);
 
 }
-void copyMatrix(double *a, double *b, int n){
-    int i,j;
-    for(i=0;i<n;i++){
-        for(j=0;j<n;j++){
-            b[i*n+j] = a[i*n+j];
-        }
-    }
-}
-
 
 void mydgetrf(double *A,int *pvt, double *tempv, int n){
     int i,t,j,k,maxind,temps;
