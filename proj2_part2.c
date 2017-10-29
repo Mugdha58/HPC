@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
+#include "lapacke.h"
+#include "blas.h"
 int i,j,k,n,t,l,p,q,m;
 double Random_gen ( )
 {
