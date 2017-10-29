@@ -123,39 +123,32 @@ void mydgetrf(double *a,int *pvt,int n,int block,double *tempv)
 
 
     }
-
-void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
-{
+//forward substitution
+void mydtrsm_f(int n, double *a, double *B, int *pvt, double *x, double *y){
+    double sum;
     int i,k;
-    double sum=0.0,temp;
-    if(label==0)// passing label to call forward and backward substitution separately
-    {//forward substitution
-    y[0]=B[pvt[0]];
-    for(i=1;i<n;i++)
-    {
-      for(k=1;k<i-1;k++)
-      {
-        sum+=y[k]*a[i*n+k];
-       
-      }
-       y[i]=B[pvt[i]]-sum;  
+    y[0] = B[pvt[0]];
+    for(i=1;i<n;i++){
+        sum = 0.0;
+        for(k=0;k<i;k++){
+            sum += y[k]*A[i*n+k];
+        }
+        y[i] = B[pvt[i]]-sum;
     }
-    }
-    //backward substitution
-    else
-    {
-    x[n-1]=y[n-1]/a[(n-1)*n+(n-1)];
+}
+//backward substitution
+void mydtrsm_b(int n, double *a, double *B, int *pvt, double *x, double *y){
+    double sum;
+    int i,k;
+    x[n-1] = y[n-1]/A[(n-1)*n+(n-1)];
     for(i=n-2;i>=0;i--){
         sum=0.0;
-        for(k=i+1;k<n;k++)
-    {
-       sum+= x[k]*a[i*n+k];
+        for(k=i+1;k<n;k++){
+            sum+= x[k]*A[i*n+k];
+        x[i] = (y[i]-sum)/A[i*n+i];
     }
-    x[i] = (y[i]-sum)/a[i*n+i];    
-    }
-
 }
-}    
+
 
 int main()
 {
@@ -198,8 +191,8 @@ int main()
     printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
     gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
    printf("\nthe gflops used are=%f",gflops);
-    mydtrsm(n,a,B,pvt,x,y,0);
-    mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
+    mydtrsm_f(n,a,B,pvt,x,y);
+    mydtrsm_b(n,a,B,pvt,x,y); 
       }
     char    TRANS = 'N';
     int     NRHS = 1;
