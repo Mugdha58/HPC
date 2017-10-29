@@ -56,7 +56,7 @@ void mydgetrf(double *A,int *pvt, double *tempv, int n){
 
 void mydtrsm_f(int n, double *A, double *B, int *pvt, double *x, double *y){
     double sum = 0.0, temp;
-    int i,j,k,n,t;
+    int i,j,k,t;
     y[0] = B[pvt[0]];
     for(i=1;i<n;i++){
         sum = 0.0;
@@ -69,7 +69,7 @@ void mydtrsm_f(int n, double *A, double *B, int *pvt, double *x, double *y){
 
 void mydtrsm_b(int n, double *A, double *B, int *pvt, double *x, double *y){
     double sum = 0.0, temp;
-    int i,j,k,n,t;
+    int i,j,k,t;
     x[n-1] = y[n-1]/A[(n-1)*n+(n-1)];
     for(i=n-2;i>=0;i--){
         sum=0.0;
