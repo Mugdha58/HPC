@@ -119,7 +119,7 @@ int main()
         for(j=0;j<n;j++)
     {
               a[i*n+j]=(double)Random_gen();
-              a1[i*n+j]=a[i*n+j];
+              A1[i*n+j]=A[i*n+j];
     }
     for(i=0;i<n;i++){
         B[i]=(double)Random_gen();
