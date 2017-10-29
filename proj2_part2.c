@@ -136,35 +136,36 @@ void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
       for(k=1;k<i-1;k++)
       {
         sum+=y[k]*a[i*n+k];
-        y[i]=B[pvt[i]]-sum;
+       
       }
+       y[i]=B[pvt[i]]-sum;  
     }
     }
     //backward substitution
     else
     {
-    x[n-1]=y[n-1]/a[n*n+n];
-    for(i=n-1;i>=0;i--)
+    x[n-1]=y[n-1]/a[(n-1)*n+(n-1)];
+    for(i=n-2;i>=0;i--){
+        sum=0.0;
         for(k=i+1;k<n;k++)
     {
        sum+= x[k]*a[i*n+k];
-       temp=y[i]-sum;
-       x[i]=temp/a[i*n+i];
-
     }
+    x[i] = (y[i]-sum)/A[i*n+i];    
     }
 
 }
+}    
 
 int main()
 {
     srand((double)time(NULL));
-    int *pvt,n,k,i,j;
+    int *pvt,n,k,i,j,block[4];
     double ran=Random_gen(10,1);
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
     struct timespec cstart = {0,0}, cend ={0,0};
-    int block[]={50,100,200,500};
+    block[]={50,100,200,500};
      for(n=1000;n<6000;n=n+1000)
     {
       for(k=0;k<4;k++)
@@ -177,6 +178,7 @@ int main()
     y=(double *) calloc(sizeof(double), n);
     x=(double *) calloc(sizeof(double), n);
     tempv=(double *) calloc(sizeof(double), n);
+    IPIV = (int *)calloc(sizeof(int),n);      
     for(i=0;i<n;i++)
         for(j=0;j<n;j++)
     {
@@ -201,7 +203,6 @@ int main()
       }
     char    TRANS = 'N';
     int     NRHS = 1;
-    int     IPIV[n];
         int     INFO = n;
         int     LDA = n;
         int     LDB = n;
