@@ -228,7 +228,7 @@ int main()
         DIAG = 'N';
     // backward Ux = y
         dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&n,&M,&b,a1, &n, B1, &n);
-             for(i=0;i<n*n;i++)
+             for(i=0;i<n;i++)
     {
        difference=(abs)(B1[i]-x[i]);
        if(difference>error)
