@@ -231,7 +231,7 @@ int main()
         for(i=0;i<n;i++)
             for(j=0;j<n;j++)
             printf("\nthe result of library function is %f\t",B1[i*n+j]);
-             for(i=0;i<n*n;i++)
+             for(i=0;i<n;i++)
     {
        difference=(abs)(B1[i]-x[i]);
        if(difference>error)
