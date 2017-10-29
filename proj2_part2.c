@@ -160,7 +160,7 @@ int main()
 {
     srand((double)time(NULL));
     int *pvt,n,k,i,j;
-    double ran=Randon_gen(10,1);
+    double ran=Random_gen(10,1);
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
     struct timespec cstart = {0,0}, cend ={0,0};
@@ -180,11 +180,11 @@ int main()
     for(i=0;i<n;i++)
         for(j=0;j<n;j++)
     {
-              a[i*n+j]=(double)Random_gen(10,1);
+              a[i*n+j]=Random_gen(10,1);
               a1[i*n+j]=a[i*n+j];
     }
     for(i=0;i<n;i++){
-    B[i]=(double)Random_gen(10,1);
+    B[i]=Random_gen(10,1);
     B1[i]=B[i];
     pvt[i]=i;
     }
