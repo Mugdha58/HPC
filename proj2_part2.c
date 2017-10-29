@@ -9,14 +9,7 @@ double Random_gen ( )
     return((double)rand()/upper_bound);
 
 }
-double neg_inverse(double *a,int n)
-{
-    for(i=0;i<n;i++)
-    for(j=0;j<n;j++){
-        if(i!=j)
-            a[i*n+j]*=(-1);
-    }
-}
+
 //to implement transpose as fortran has column wise implementation and the program is implemented in row wise implementation
 void transpose(double *a, int n){
     int i,j;
@@ -29,15 +22,15 @@ void transpose(double *a, int n){
         }
     }
 }
-void mydgetrf(double *a,int *pvt,int n,int block)
+void mydgetrf(double *a,int *pvt,int n,int block,double *tempv)
 {
     int maxind,temps,ib,end;
-    double max,tempv;
+    double max,sum;
     double *ll;
     for(ib=0;ib<n;ib+=block)
     {
-     end=3+ib;
-    for(i=ib;i<end;i++)
+     end=(block-1)+ib;
+    for(i=ib;i<=end;i++)
     {
        maxind=i;
        max=abs(a[i*n+i]);
@@ -51,7 +44,7 @@ void mydgetrf(double *a,int *pvt,int n,int block)
 
              }
        }
-       if(max==0)
+       if(max==0.0)
        {
 
         printf("LU factorization failed:coefficient matrix is singular");
@@ -65,22 +58,29 @@ void mydgetrf(double *a,int *pvt,int n,int block)
             temps=pvt[i];
             pvt[i]=pvt[maxind];
             pvt[maxind]=temps;
-            for(k=i;k<n;i++)
-            {tempv=a[i*n+k];
+            for(k=0;k<n;i++)
+            {tempv[k]=a[i*n+k];
             a[i*n+k]=a[maxind*n+k];
-            a[maxind*n+k]=tempv;
+            a[maxind*n+k]=tempv[k];
             }
         }
        }
 
     }
+    //factorizing
+      for(j=i+1;j<n;j++)
+      {     a[j*n+i]=a[j*n+i]/a[i*n+i];
+          for(k=i+1;k<=end;k++){
+            a[j*n+k]=a[j*n+k]-(a[j*n+i]*a[i*n+k]);
+          }
+      }
     //ll inverse
     ll = (double*)calloc(sizeof(double), block*block);
             p=0;q=0;
             for(l=ib;l<=end;l++){
                 for(m=ib;m<=end;m++){
-                    if(l<m){
-                        ll[p*block+q] = a[p*block+q];
+                    if(l>m){
+                        ll[p*block+q] = a[l*n+m];
                     }
                     else if(l==m){
                         ll[p*block+q] = 1;
@@ -96,24 +96,29 @@ void mydgetrf(double *a,int *pvt,int n,int block)
             p=0;q=0;
             for(j=ib;j<=end;j++){
                 for(k=end+1;k<n;k++){
-                    for(m=ib;m<end;m++){
-                        a[j*n+k] += ll[p*block+q] * a[m*n+k];
+                        sum=0.0;
+                    for(m=ib;m<=end;m++){
+                        sum+= ll[p*block+q] * a[m*n+k];
                         q++;
                     }
+                    a[j*n+k]=sum;
                     q=0;
                 }
                 p++;
                 q=0;
             }
+            for(j=end+1;j<n;j++){
+                for(k=end+1;k<n;k++){
+                    double store=0.0;
+                    for(l=ib;l<=end;l++){
+                        store+=a[j*n+l]*a[l*n+k];
+                    }
+                    a[j*n+k]-=store;
+                }
+            }
+            free(ll);
     }
-      //factorizing
-      for(j=end;j<n;j++)
-      {
-          for(k=end+1;k<n;k++){
-            for(l=ib;i<=end;l++)
-            a[j*n+k]=a[j*n+k]-(a[j*n+l]*a[l*n+k]);
-          }
-      }
+
 
     }
 
@@ -150,12 +155,15 @@ void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
 
 int main()
 {
-    int *pvt,n=8;
+    int *pvt,n,k;
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
-    //struct timespec cstart = {0,0}, cend ={0,0};
-   // for(n=1000;n<6000;n=n+1000)
-    //{
+    struct timespec cstart = {0,0}, cend ={0,0};
+    int block[]={50,100,200,500};
+     for(n=1000;n<6000;n=n+1000)
+    {
+      for(k=0;k<4;k++)
+      {
     a=(double *) calloc(sizeof(double), n*n);
     B=(double *) calloc(sizeof(double), n*1);
     a1=(double *) calloc(sizeof(double), n*n);
@@ -177,7 +185,7 @@ int main()
     }
     transpose(a,n);
     clock_gettime(CLOCK_MONOTONIC, &cstart);
-    mygetrf(a,pvt,n,tempv);
+    mydgetrf(a,pvt,n,block[k],tempv);
    clock_gettime(CLOCK_MONOTONIC, &cend);
    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
     printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
@@ -238,6 +246,6 @@ int main()
     free(a1);
     free(B1);
     free(tempv);
-  //  }
+  }
     return 0;
 }
