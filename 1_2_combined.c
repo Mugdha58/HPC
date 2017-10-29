@@ -5,7 +5,7 @@
 #include "lapacke.h"
 #include "blas.h"
 
-int i,j,k,n,t,temp;
+
 
 double Random_gen ( int upper, int lower)
 {
@@ -16,6 +16,7 @@ double Random_gen ( int upper, int lower)
 
 void mydgetrf(double *A,int *pvt, double *tempv, int n){
     int i,t,j,k,maxind,temps;
+
     double max;
     for(i=0;i<n-1;i++){
         maxind = i;
@@ -55,7 +56,7 @@ void mydgetrf(double *A,int *pvt, double *tempv, int n){
 
 void mydtrsm_f(int n, double *A, double *B, int *pvt, double *x, double *y){
     double sum = 0.0, temp;
-    int i,k;
+    int i,j,k,n,t;
     y[0] = B[pvt[0]];
     for(i=1;i<n;i++){
         sum = 0.0;
@@ -68,7 +69,7 @@ void mydtrsm_f(int n, double *A, double *B, int *pvt, double *x, double *y){
 
 void mydtrsm_b(int n, double *A, double *B, int *pvt, double *x, double *y){
     double sum = 0.0, temp;
-    int i,k;
+    int i,j,k,n,t;
     x[n-1] = y[n-1]/A[(n-1)*n+(n-1)];
     for(i=n-2;i>=0;i--){
         sum=0.0;
@@ -97,7 +98,7 @@ int main()
     int u=10,l=1;
     //int size = (sizeof(arrayLen)/sizeof(arrayLen[0]));
     double ran = Random_gen(u,l);
-    int n,j,i,k;
+    int i,j,k,n,t,temp;
     printf("Using LAPACK Library\n");
     for(n=1000;n<6000;n=n+1000)
     {
