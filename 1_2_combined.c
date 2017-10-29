@@ -109,16 +109,17 @@ void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
 int main()
 {
     int *pvt,n=8;
-    double *a,*B,*a1,*B1,*x,*y,*tempv,error=0.0,difference;
+    double *a,*B,*a1,*B1,*x,*y,*tempv;
+    double error=0.0,difference;
     double gflops,cpu_time;
     struct timespec cstart = {0,0}, cend ={0,0};
    // for(n=1000;n<6000;n=n+1000)
     //{
     a=(double *) calloc(sizeof(double), n*n);
-    B=(double *) calloc(sizeof(double), n*1);
+    B=(double *) calloc(sizeof(double), n);
     a1=(double *) calloc(sizeof(double), n*n);
-    B1=(double *) calloc(sizeof(double), n*1);
-    pvt=(int *) calloc(sizeof(int), 1*n);
+    B1=(double *) calloc(sizeof(double), n);
+    pvt=(int *) calloc(sizeof(int), n);
     y=(double *) calloc(sizeof(double), n);
     x=(double *) calloc(sizeof(double), n);
     tempv=(double *) calloc(sizeof(double), n);
@@ -144,8 +145,7 @@ int main()
     mydtrsm(n,a,B,pvt,x,y,0);
     mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
      for(i=0;i<n;i++)
-    for(j=0;j<n;j++)
-    printf("\nthe result of my implementation is %f\t",x[i*n+j]);
+    printf("\nthe result of my implementation is %f\t",x[i]);
     char    TRANS = 'N';
     int     NRHS = 1;
     int     IPIV[n];
@@ -179,8 +179,7 @@ int main()
     // backward Ux = y
         dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&n,&M,&b,a1, &n, B1, &n);
         for(i=0;i<n;i++)
-            for(j=0;j<n;j++)
-            printf("\nthe result of library function is %f\t",B1[i*n+j]);
+            printf("\nthe result of library function is %f\t",B1[i]);
              for(i=0;i<n*n;i++)
     {
        difference=(abs)(B1[i]-x[i]);
