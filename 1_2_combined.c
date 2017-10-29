@@ -4,7 +4,9 @@
 #include<time.h>
 #include "lapacke.h"
 #include "blas.h"
+
 int i,j,k,n,t,temp;
+
 double random_gen(int ubound, int lbound){
     double s;
     s = ((double)rand()/(RAND_MAX))*(ubound-lbound);
@@ -89,7 +91,7 @@ void transpose(double *a, int n){
 }
 
 int main()
-{   srand(double)time(NULL);
+{   srand((double)time(NULL));
     double time,gflops;
     //int size = (sizeof(arrayLen)/sizeof(arrayLen[0]));
     int n,j,i,k;
@@ -106,7 +108,7 @@ int main()
         int *IPIV = (int *)calloc(sizeof(int),n);
         double  *A, *A1, *B, *B1, *x, *y, *abk, *tempv, difference, error =0.0;
         int *pvt;
-        A1=(double *) calloc(sizeof(double), n*n);
+        A=(double *) calloc(sizeof(double), n*n);
         B=(double *) calloc(sizeof(double), n);
         A1=(double *) calloc(sizeof(double), n*n);
         B1=(double *) calloc(sizeof(double), n);
@@ -118,7 +120,7 @@ int main()
         for(i=0;i<n;i++)
         for(j=0;j<n;j++)
     {
-              a[i*n+j]=Random_gen(10,1);
+              A[i*n+j]=Random_gen(10,1);
               A1[i*n+j]=A[i*n+j];
     }
     for(i=0;i<n;i++){
