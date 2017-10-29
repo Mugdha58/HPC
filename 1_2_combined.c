@@ -135,7 +135,7 @@ int main()
     }
     transpose(a,n);
     clock_gettime(CLOCK_MONOTONIC, &cstart);
-    mygetrf(a,pvt,n,tempv);
+    mydgetrf(a,pvt,n,tempv);
     clock_gettime(CLOCK_MONOTONIC, &cend);
     cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
     printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
