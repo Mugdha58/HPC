@@ -145,6 +145,7 @@ void mydtrsm_b(int n, double *a, double *B, int *pvt, double *x, double *y){
         sum=0.0;
         for(k=i+1;k<n;k++){
             sum+= x[k]*a[i*n+k];
+        }    
         x[i] = (y[i]-sum)/a[i*n+i];
     }
 }
