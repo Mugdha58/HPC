@@ -2,28 +2,14 @@
 #include <stdlib.h>
 #include<time.h>
 #include<math.h>
-#include "lapacke.h"
-#include "blas.h"
-
+int i,j,k,n,t,l,p,q,m;
 double Random_gen ( )
 {
     double upper_bound=RAND_MAX/10.0;
     return((double)rand()/upper_bound);
 
 }
-<<<<<<< HEAD
-double neg_inverse(double *a,int n)
-{
-    int i,j;
-    for(i=0;i<n;i++)
-    for(j=0;j<n;j++){
-        if(i!=j)
-            a[i*n+j]*=(-1);
-    }
-}
-=======
 
->>>>>>> b46e0abfcc5840da485d787a63499fef15df40d1
 //to implement transpose as fortran has column wise implementation and the program is implemented in row wise implementation
 void transpose(double *a, int n){
     int i,j;
@@ -36,17 +22,10 @@ void transpose(double *a, int n){
         }
     }
 }
-<<<<<<< HEAD
-void mydgetrf(double *a,int *pvt,int n,double *tempv,int block)
-{
-    int maxind,temps,ib,end,i,k,p,q,t,l,m,j;
-    double max;
-=======
 void mydgetrf(double *a,int *pvt,int n,int block,double *tempv)
 {
     int maxind,temps,ib,end;
     double max,sum;
->>>>>>> b46e0abfcc5840da485d787a63499fef15df40d1
     double *ll;
     for(ib=0;ib<n;ib+=block)
     {
@@ -79,11 +58,7 @@ void mydgetrf(double *a,int *pvt,int n,int block,double *tempv)
             temps=pvt[i];
             pvt[i]=pvt[maxind];
             pvt[maxind]=temps;
-<<<<<<< HEAD
-            for(k=i;k<n;i++)
-=======
             for(k=0;k<n;i++)
->>>>>>> b46e0abfcc5840da485d787a63499fef15df40d1
             {tempv[k]=a[i*n+k];
             a[i*n+k]=a[maxind*n+k];
             a[maxind*n+k]=tempv[k];
@@ -149,7 +124,6 @@ void mydgetrf(double *a,int *pvt,int n,int block,double *tempv)
 
 void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
 {
-    int i,k;
     double sum=0.0,temp;
     if(label==0)// passing label to call forward and backward substitution separately
     {//forward substitution
@@ -181,14 +155,6 @@ void mydtrsm(int n,double *a,double *b,int *pvt,double *x,double *y,int label)
 
 int main()
 {
-<<<<<<< HEAD
-    int *pvt,n=8,i,j,k;
-    double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
-    double gflops,cpu_time;
-    struct timespec cstart = {0,0}, cend ={0,0};
-   // for(n=1000;n<6000;n=n+1000)
-    //{
-=======
     int *pvt,n,k;
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
@@ -198,7 +164,6 @@ int main()
     {
       for(k=0;k<4;k++)
       {
->>>>>>> b46e0abfcc5840da485d787a63499fef15df40d1
     a=(double *) calloc(sizeof(double), n*n);
     B=(double *) calloc(sizeof(double), n*1);
     a1=(double *) calloc(sizeof(double), n*n);
@@ -220,11 +185,7 @@ int main()
     }
     transpose(a,n);
     clock_gettime(CLOCK_MONOTONIC, &cstart);
-<<<<<<< HEAD
-    mydgetrf(a,pvt,n,tempv,4);
-=======
     mydgetrf(a,pvt,n,block[k],tempv);
->>>>>>> b46e0abfcc5840da485d787a63499fef15df40d1
    clock_gettime(CLOCK_MONOTONIC, &cend);
    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
     printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
@@ -270,7 +231,7 @@ int main()
         for(i=0;i<n;i++)
             for(j=0;j<n;j++)
             printf("\nthe result of library function is %f\t",B1[i*n+j]);
-             for(i=0;i<n;i++)
+             for(i=0;i<n*n;i++)
     {
        difference=(abs)(B1[i]-x[i]);
        if(difference>error)
@@ -285,6 +246,6 @@ int main()
     free(a1);
     free(B1);
     free(tempv);
-  }
+  //  }
     return 0;
 }
