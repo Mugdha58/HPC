@@ -151,7 +151,7 @@ void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
     {
        sum+= x[k]*a[i*n+k];
     }
-    x[i] = (y[i]-sum)/A[i*n+i];    
+    x[i] = (y[i]-sum)/a[i*n+i];    
     }
 
 }
@@ -160,12 +160,12 @@ void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
 int main()
 {
     srand((double)time(NULL));
-    int *pvt,n,k,i,j,block[4];
+    int *pvt,n,k,i,j,*IPIV;
     double ran=Random_gen(10,1);
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
     struct timespec cstart = {0,0}, cend ={0,0};
-    block[]={50,100,200,500};
+    int block[4]={50,100,200,500};
      for(n=1000;n<6000;n=n+1000)
     {
       for(k=0;k<4;k++)
