@@ -50,9 +50,9 @@ void mydgetrf(double *a,int *pvt,int n,double *tempv)
 
         if(maxind!=i)
         {   //save pivoting information
-            temps=pvt[i];
-            pvt[i]=pvt[maxind];
-            pvt[maxind]=temps;
+//            temps=pvt[i];
+//            pvt[i]=pvt[maxind];
+//            pvt[maxind]=temps;
 //            for(k=0;k<n;i++)
 //            {
 //                tempv[k]=a[i*n+k];
