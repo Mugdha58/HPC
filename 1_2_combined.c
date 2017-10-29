@@ -128,7 +128,7 @@ int main()
         B1[i]=B[i];
         pvt[i]=i;
     }
-    transpose(a,n);
+    transpose(A,n);
 
         char     SIDE = 'L';
         char     UPLO = 'L';
