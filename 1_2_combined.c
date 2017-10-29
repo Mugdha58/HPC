@@ -45,28 +45,28 @@ void mydgetrf(double *a,int *pvt,int n,double *tempv)
         printf("LU factorization failed:coefficient matrix is singular");
         return;
        }
-       else
-       {
-
-        if(maxind!=i)
-        {   //save pivoting information
-            temps=pvt[i];
-            pvt[i]=pvt[maxind];
-            pvt[maxind]=temps;
-            for(k=0;k<n;i++)
-            {tempv[k]=a[i*n+k];
-            a[i*n+k]=a[maxind*n+k];
-            a[maxind*n+k]=tempv[k];
-            }
-        }
-       }
-      //factorizing
-      for(j=i+1;j<n;k++)
-      {
-          a[j*n+i]=a[j*n+i]/a[i*n+i];
-          for(k=i+1;k<n;k++)
-            a[j*n+k]=a[j*n+k]-(a[j*n+i]*a[i*n+k]);
-      }
+//       else
+//       {
+//
+//        if(maxind!=i)
+//        {   //save pivoting information
+//            temps=pvt[i];
+//            pvt[i]=pvt[maxind];
+//            pvt[maxind]=temps;
+//            for(k=0;k<n;i++)
+//            {tempv[k]=a[i*n+k];
+//            a[i*n+k]=a[maxind*n+k];
+//            a[maxind*n+k]=tempv[k];
+//            }
+//        }
+//       }
+//      //factorizing
+//      for(j=i+1;j<n;k++)
+//      {
+//          a[j*n+i]=a[j*n+i]/a[i*n+i];
+//          for(k=i+1;k<n;k++)
+//            a[j*n+k]=a[j*n+k]-(a[j*n+i]*a[i*n+k]);
+//      }
 
     }
 }
@@ -138,12 +138,12 @@ int main()
     clock_gettime(CLOCK_MONOTONIC, &cstart);
     mydgetrf(a,pvt,n,tempv);
     clock_gettime(CLOCK_MONOTONIC, &cend);
-    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
-    printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
-    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
-    printf("\nthe gflops used are=%f",gflops);
-    mydtrsm(n,a,B,pvt,x,y,0);
-    mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
+//    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
+//    printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
+//    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
+//    printf("\nthe gflops used are=%f",gflops);
+//    mydtrsm(n,a,B,pvt,x,y,0);
+//    mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
 //     for(i=0;i<n;i++)
 //    printf("\nthe result of my implementation is %f\t",x[i]);
 //    char    TRANS = 'N';
