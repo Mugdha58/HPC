@@ -11,7 +11,7 @@ double Random_gen ( )
     return((double)rand()/upper_bound);
 
 }
-double transpose(double *a,int n) //to implement transpose as fortran has column wise implementation and the program is implemented in row wise implementation
+void transpose(double *a,int n) //to implement transpose as fortran has column wise implementation and the program is implemented in row wise implementation
 {
     for(i=0;i<n;i++)
         for(j=i;j<n;j++)
@@ -23,7 +23,7 @@ double transpose(double *a,int n) //to implement transpose as fortran has column
 }
 void mydgetrf(double *a,int *pvt,int n,double *tempv)
 {
-    int maxind,temps;
+    int i,j,k,t,maxind,temps;
     double max;
     for(i=0;i<n-1;i++)
     {
@@ -53,7 +53,7 @@ void mydgetrf(double *a,int *pvt,int n,double *tempv)
             temps=pvt[i];
             pvt[i]=pvt[maxind];
             pvt[maxind]=temps;
-            for(k=i;k<n;i++)
+            for(k=0;k<n;i++)
             {tempv[k]=a[i*n+k];
             a[i*n+k]=a[maxind*n+k];
             a[maxind*n+k]=tempv[k];
@@ -130,20 +130,20 @@ int main()
               a1[i*n+j]=a[i*n+j];
     }
     for(i=0;i<n;i++){
-    B[i]=(double)Random_gen();
-    B1[i]=B[i];
-    pvt[i]=i;
+        B[i]=(double)Random_gen();
+        B1[i]=B[i];
+        pvt[i]=i;
     }
-//    transpose(a,n);
-//    clock_gettime(CLOCK_MONOTONIC, &cstart);
-//    mydgetrf(a,pvt,n,tempv);
-//    clock_gettime(CLOCK_MONOTONIC, &cend);
-//    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
-//    printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
-//    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
-//    printf("\nthe gflops used are=%f",gflops);
-//    mydtrsm(n,a,B,pvt,x,y,0);
-//    mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
+    transpose(a,n);
+    clock_gettime(CLOCK_MONOTONIC, &cstart);
+    mydgetrf(a,pvt,n,tempv);
+    clock_gettime(CLOCK_MONOTONIC, &cend);
+    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
+    printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
+    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
+    printf("\nthe gflops used are=%f",gflops);
+    mydtrsm(n,a,B,pvt,x,y,0);
+    mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
 //     for(i=0;i<n;i++)
 //    printf("\nthe result of my implementation is %f\t",x[i]);
 //    char    TRANS = 'N';
@@ -160,8 +160,7 @@ int main()
 //        printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
 //        gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
 //        printf("\nthe gflops used are=%f",gflops);
-//        char     SIDE = 'L';
-//        char     UPLO = 'L';
+//        char     SIDE = 'L';        char     UPLO = 'L';
 //        char     DIAG = 'U';
 //        int      M    = 1;
 //        double   b    = 1.0;
