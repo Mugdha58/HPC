@@ -24,7 +24,7 @@ double transpose(double *a,int n) //to implement transpose as fortran has column
 void mydgetrf(double *a,int *pvt,int n)
 {
     int maxind,temps;
-    double max,tempv;
+    double max;
     for(i=0;i<n-1;i++)
     {
        maxind=i;
