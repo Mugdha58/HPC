@@ -193,9 +193,7 @@ int main()
    printf("\nthe gflops used are=%f",gflops);
     mydtrsm(n,a,B,pvt,x,y,0);
     mydtrsm(n,a,B,pvt,x,y,1); // label 1 is passed so that backward substitution will be done
-     for(i=0;i<n;i++)
-    for(j=0;j<n;j++)
-    printf("\nthe result of my implementation is %f\t",x[i*n+j]);
+      }
     char    TRANS = 'N';
     int     NRHS = 1;
     int     IPIV[n];
@@ -228,9 +226,6 @@ int main()
         DIAG = 'N';
     // backward Ux = y
         dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&n,&M,&b,a1, &n, B1, &n);
-        for(i=0;i<n;i++)
-            for(j=0;j<n;j++)
-            printf("\nthe result of library function is %f\t",B1[i*n+j]);
              for(i=0;i<n*n;i++)
     {
        difference=(abs)(B1[i]-x[i]);
@@ -246,6 +241,6 @@ int main()
     free(a1);
     free(B1);
     free(tempv);
-  //  }
+    }
     return 0;
 }
