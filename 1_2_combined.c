@@ -123,21 +123,21 @@ int main()
     y=(double *) calloc(sizeof(double), n);
     x=(double *) calloc(sizeof(double), n);
     tempv=(double *) calloc(sizeof(double), n);
-//    for(i=0;i<n;i++)
-//        for(j=0;j<n;j++)
-//    {
-//              a[i*n+j]=(double)Random_gen();
-//              a1[i*n+j]=a[i*n+j];
-//    }
-//    for(i=0;i<n;i++){
-//    B[i]=(double)Random_gen();
-//    B1[i]=B[i];
-//    pvt[i]=i;
-//    }
-//    transpose(a,n);
-//    clock_gettime(CLOCK_MONOTONIC, &cstart);
-//    mydgetrf(a,pvt,n,tempv);
-//    clock_gettime(CLOCK_MONOTONIC, &cend);
+    for(i=0;i<n;i++)
+        for(j=0;j<n;j++)
+    {
+              a[i*n+j]=(double)Random_gen();
+              a1[i*n+j]=a[i*n+j];
+    }
+    for(i=0;i<n;i++){
+    B[i]=(double)Random_gen();
+    B1[i]=B[i];
+    pvt[i]=i;
+    }
+    transpose(a,n);
+    clock_gettime(CLOCK_MONOTONIC, &cstart);
+    mydgetrf(a,pvt,n,tempv);
+    clock_gettime(CLOCK_MONOTONIC, &cend);
 //    cpu_time=((double)cend.tv_sec + 1.0e-9*cend.tv_nsec) - ((double)cstart.tv_sec + 1.0e-9*cstart.tv_nsec);
 //    printf("\nCPU time for LU factorization n=%d is %f",n,cpu_time);
 //    gflops=(2*pow(n,3))/(3*cpu_time*pow(10,9));
