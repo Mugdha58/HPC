@@ -159,7 +159,7 @@ void mydtrsm(int n,double *a,double *B,int *pvt,double *x,double *y,int label)
 int main()
 {
     srand((double)time(NULL));
-    int *pvt,n,k,i,j,k,n;
+    int *pvt,n,k,i,j;
     double ran=Randon_gen(10,1);
     double *a,*B,*a1,*B1,*x,*y,*tempv,difference,error=0.0;
     double gflops,cpu_time;
