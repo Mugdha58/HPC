@@ -116,7 +116,7 @@ int main()
         y=(double *) calloc(sizeof(double), n);
         x=(double *) calloc(sizeof(double), n);
         tempv=(double *) calloc(sizeof(double), n);
-        int garbage=Random_gen(10,1);
+        int garbage=random_gen(10,1);
         for(i=0;i<n;i++)
         for(j=0;j<n;j++)
     {
