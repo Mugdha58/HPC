@@ -101,12 +101,11 @@ void transpose(double *a, int n){
 int main()
 {
     double time,gflops;
-    int size = (sizeof(arrayLen)/sizeof(arrayLen[0]));
+    //int size = (sizeof(arrayLen)/sizeof(arrayLen[0]));
     int n,j,i,k;
     printf("Using LAPACK Library\n");
-    for(n=1000;n<6000;N=n+1000)
+    for(n=1000;n<6000;n=n+1000)
     {
-    for(j=0;j<size;j++){
         struct timespec tstart={0,0},tend={0,0};
         char TRANS = 'N';
         int INFO = n;
@@ -115,11 +114,11 @@ int main()
         int N = n;
         int NRHS = 1;
         int *IPIV = (int *)calloc(sizeof(int),n);
-        double  *A, *A1, *B, *B1, *x, *y, *abk, *tempv;
+        double  *A, *A1, *B, *B1, *x, *y, *abk, *tempv, difference, error =0.0;
         int *pvt;
-        a=(double *) calloc(sizeof(double), n*n);
+        A1=(double *) calloc(sizeof(double), n*n);
         B=(double *) calloc(sizeof(double), n);
-        a1=(double *) calloc(sizeof(double), n*n);
+        A1=(double *) calloc(sizeof(double), n*n);
         B1=(double *) calloc(sizeof(double), n);
         pvt=(int *) calloc(sizeof(int), n);
         y=(double *) calloc(sizeof(double), n);
@@ -196,7 +195,7 @@ int main()
         free(y);
         free(abk);
         free(IPIV);
-        free(tempv);}
+        free(tempv);
     }
     return 0;
 }
