@@ -16,7 +16,7 @@ int main (int argc, char *argv[])
 {
 
    int id,p,n;
-   unsigned long long int i,low_value,high_low,proc0_size,prime,index,count;
+   unsigned long long int i,low_value,high_low,proc0_size,prime,index,count,elapsed_time,low_value,high_value;
    char *marked;
    MPI_Init (&argc, &argv);
    MPI_Barrier(MPI_COMM_WORLD);
