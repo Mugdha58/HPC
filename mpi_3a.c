@@ -1,4 +1,6 @@
 #include <mpi.h>
+#include<stdlib.h>
+#include<stdint.h>
 #include <math.h>
 #include <stdio.h>
 #define MIN(a,b)  ((a)<(b)?(a):(b))
