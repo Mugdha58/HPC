@@ -15,8 +15,8 @@ define BLOCK_LOW(id,p,n)  ((id)*(n)/(p))
 int main (int argc, char *argv[])
 {
 
-   int id,p,n;
-   unsigned long long int i,low_value,high_low,proc0_size,prime,index,count,elapsed_time,low_value,high_value;
+   int id,p;
+   unsigned long long int i,low_value,high_low,proc0_size,prime,index,count,elapsed_time,low_value,high_value,n;
    char *marked;
    MPI_Init (&argc, &argv);
    MPI_Barrier(MPI_COMM_WORLD);
@@ -27,7 +27,7 @@ if (argc != 2) {
       if (!id) printf ("Command line: %s <m>\n", argv[0]);
       MPI_Finalize(); exit (1);
 }
-   n = atoi(argv[1]);
+   n = atoll(argv[1]);
    low_value = 2 + BLOCK_LOW(id,p,n-1);
    high_value = 2 + BLOCK_HIGH(id,p,n-1);
    size = BLOCK_SIZE(id,p,n-1);
