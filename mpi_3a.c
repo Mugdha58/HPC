@@ -1,9 +1,8 @@
 #include <mpi.h>
 #include <math.h>
 #include <stdio.h>
-#include "MyMPI.h"
 #define MIN(a,b)  ((a)<(b)?(a):(b))
-define BLOCK_LOW(id,p,n)  ((id)*(n)/(p))
+#define BLOCK_LOW(id,p,n)  ((id)*(n)/(p))
 
 #define BLOCK_HIGH(id,p,n)( BLOCK_LOW((id)+1,p,n)-1 )
 
@@ -15,8 +14,8 @@ define BLOCK_LOW(id,p,n)  ((id)*(n)/(p))
 int main (int argc, char *argv[])
 {
 
-   int id,p;
-   unsigned long long int i,low_value,high_low,proc0_size,prime,index,count,low_value,high_value,n;
+   int id,p,index,count;
+   unsigned long long int i,low_value,high_low,proc0_size,prime,high_value,n,size,first,global_count;
    double elapsed_time;
    char *marked;
    MPI_Init (&argc, &argv);
@@ -26,7 +25,8 @@ int main (int argc, char *argv[])
    MPI_Comm_size (MPI_COMM_WORLD, &p);
 if (argc != 2) {
       if (!id) printf ("Command line: %s <m>\n", argv[0]);
-      MPI_Finalize(); exit (1);
+      MPI_Finalize(); 
+      exit (1);
 }
    n = atoll(argv[1]);
    low_value = 2 + BLOCK_LOW(id,p,n-1);
